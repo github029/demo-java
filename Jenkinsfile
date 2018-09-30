@@ -22,7 +22,7 @@ pipeline {
                 script {
                     app = docker.build("veer/java-demo")
                     app.inside {
-                        sh 'echo $(curl localhost:8080)'
+                        sh 'echo $(curl 107.21.35.45:8080)'
                     }
                 }
             }
