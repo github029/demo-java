@@ -6,7 +6,8 @@ pipeline {
             steps { 
                echo 'This is a pipeline to build .war package.'
                 sh 'mvn --version'
-                sh 'mvn clean package -U'
+               // sh 'mvn clean package -U'
+               sh "bin/build"
                 // prepare docker build context
                //sh 'sudo chmod 777 /var/lib/docker/tmp'
                // sh "cp target/demo.war /var/lib/docker/tmp"
