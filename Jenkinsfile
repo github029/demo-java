@@ -43,28 +43,28 @@ pipeline {
             }
         }
         
-        
-        stage('Deploy To Production') {
+         stage('Deploy To Production') {
             when {
                 branch 'master'
             }
             steps {
                 input 'Deploy to Production?'
                 milestone(1)
-                withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
+                sshagent ( ['webserver_ssh_key']) {
                     script {
-                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker pull vgdocker123/javademo:${env.BUILD_NUMBER}\""
+                        sh "ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker pull vgdocker123/javademo:${env.BUILD_NUMBER}\""
                         try {
-                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker stop javademo\""
-                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker rm javademo\""
+                            sh "ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker stop javademo\""
+                            sh "ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker rm javademo\""
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
-                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker run --restart always --name javademo -p 8080:8080 -d vgdocker123/javademo:${env.BUILD_NUMBER}\""
+                        sh "ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker run --restart always --name javademo -p 8080:8080 -d vgdocker123/javademo:${env.BUILD_NUMBER}\""
                     }
                 }
             }
         }
+       
         
         
         
