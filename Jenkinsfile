@@ -7,6 +7,8 @@ pipeline {
                echo 'This is a pipeline to build .war package.'
                 sh 'mvn --version'
                 sh 'mvn clean package -U'
+                // prepare docker build context
+                sh "cp target/demo.war ./tmp-docker-build-context"
             }
         }
 
