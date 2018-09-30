@@ -20,7 +20,7 @@ pipeline {
             }
             steps {
                 script {
-                    app = docker.build("vgdocker123/java_demo/java-demo")
+                    app = docker.build("vgdocker123/javademo")
                     app.inside {
                         sh 'echo $(curl 107.21.35.45:8080/demo/Hello)'
                     }
