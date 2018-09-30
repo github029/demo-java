@@ -1,5 +1,5 @@
 FROM tomcat:8.5
-MAINTAINER Tung Nguyen <tongueroo@gmail.com>
+MAINTAINER veerendra <gkveerendra@gmail.com>
 # Place the code version inside the webapps directory
 
 ARG PACKAGE_VERSION
