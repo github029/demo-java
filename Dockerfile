@@ -1,6 +1,11 @@
 FROM tomcat:8.5
 MAINTAINER Tung Nguyen <tongueroo@gmail.com>
-COPY ./ ./
+# Place the code version inside the webapps directory
+
+ARG PACKAGE_VERSION
+
+RUN echo "${PACKAGE_VERSION}" >> /usr/local/tomcat/webapps/version.txt
+
 # Debugging tools: A few ways to handle debugging tools.
 # Trade off is a slightly more complex volume mount vs keeping the image size down.
 RUN apt-get update && \
@@ -12,7 +17,7 @@ RUN apt-get update && \
 
 RUN echo "export JAVA_OPTS=\"-Dapp.env=staging\"" > /usr/local/tomcat/bin/setenv.sh
 
-COPY "/target/tmp/demo.war /usr/local/tomcat/webapps/demo.war"
+COPY demo.war /usr/local/tomcat/webapps/demo.war
 
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
