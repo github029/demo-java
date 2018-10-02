@@ -43,27 +43,27 @@ pipeline {
             }
         }
         
-         stage('Deploy To Production') {
-            when {
-                branch 'master'
-            }
-            steps {
-                input 'Deploy to Production?'
-                milestone(1)
-                sshagent ( ['webserver_ssh_key']) {
-                    script {
-                        sh "ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker pull vgdocker123/javademo:${env.BUILD_NUMBER}\""
-                        try {
-                            sh "ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker stop javademo\""
-                            sh "ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker rm javademo\""
-                        } catch (err) {
-                            echo: 'caught error: $err'
-                        }
-                        sh "ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker run --restart always --name javademo -p 8080:8080 -d vgdocker123/javademo:${env.BUILD_NUMBER}\""
-                    }
-                }
-            }
-        }
+        // stage('Deploy To Production') {
+       //     when {
+        //        branch 'master'
+       //     }
+        //    steps {
+       //         input 'Deploy to Production?'
+        //        milestone(1)
+        //       sshagent ( ['webserver_ssh_key']) {
+        //            script {
+         //               sh "ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker pull vgdocker123/javademo:${env.BUILD_NUMBER}\""
+          //              try {
+          //                  sh "ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker stop javademo\""
+         //                   sh "ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker rm javademo\""
+         //               } catch (err) {
+         //                   echo: 'caught error: $err'
+          //              }
+         //               sh "ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker run --restart always --name javademo -p 8080:8080 -d vgdocker123/javademo:${env.BUILD_NUMBER}\""
+          //          }
+        //        }
+     //       }
+  //      }
        
         
      // Test on cloud Server
