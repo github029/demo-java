@@ -7,7 +7,7 @@ pipeline {
                echo 'This is a pipeline to build .war package.'
                 //sh 'mvn --version'
                 withMaven(maven : 'Maven_3.3.9'){
-                 sh 'mvn --version
+                 sh 'mvn --version'
                  sh "bin/build"
                 }
                // sh 'mvn clean package -U'
