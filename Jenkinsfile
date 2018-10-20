@@ -20,7 +20,9 @@ pipeline {
                echo 'This is a pipeline to build .war package.'
                 //sh 'mvn --version'
                 
-                 withEnv(["JAVA_HOME=${ tool JDK18 }", "PATH+JAVA=${ tool JDK18}"]) {
+                  withEnv(["JAVA_HOME=${tool 'JDK18'}", "PATH=${tool 'JDK18'}/bin:${env.PATH}"]) {
+                 sh 'java -version'
+     
                      
                 
                 withMaven(maven : 'Maven_3.3.9'){
