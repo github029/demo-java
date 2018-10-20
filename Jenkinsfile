@@ -6,8 +6,12 @@ pipeline {
             steps { 
                echo 'This is a pipeline to build .war package.'
                 //sh 'mvn --version'
+                withMaven(maven : 'Maven_3.3.9'){
+                 sh 'mvn --version
+                 sh "bin/build"
+                }
                // sh 'mvn clean package -U'
-               sh "bin/build"
+               //sh "bin/build"
                 // prepare docker build context
                //sh 'sudo chmod 777 /var/lib/docker/tmp'
                // sh "cp target/demo.war /var/lib/docker/tmp"
