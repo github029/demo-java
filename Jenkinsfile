@@ -2,27 +2,33 @@
 pipeline { 
     agent any  
     
-    jdk = tool name: 'JDK18'
-    env.JAVA_HOME = "${jdk}"
+    //jdk = tool name: 'JDK18'
+   // env.JAVA_HOME = "${jdk}"
 
-    echo "jdk installation path is: ${jdk}"
+   // echo "jdk installation path is: ${jdk}"
 
   // next 2 are equivalents
-     sh "${jdk}/bin/java -version"
+   //  sh "${jdk}/bin/java -version"
 
   // note that simple quote strings are not evaluated by Groovy
   // substitution is done by shell script using environment
-     sh '$JAVA_HOME/bin/java -version'
+  //   sh '$JAVA_HOME/bin/java -version'
     
     stages { 
         stage('Build') { 
             steps { 
                echo 'This is a pipeline to build .war package.'
                 //sh 'mvn --version'
+                
+                 withEnv(["JAVA_HOME=${ tool JDK18 }", "PATH+JAVA=${ tool JDK18}"]) {
+                     
+                
                 withMaven(maven : 'Maven_3.3.9'){
                  sh 'mvn --version'
                  sh "bin/build"
                 }
+                     
+           }
                // sh 'mvn clean package -U'
                //sh "bin/build"
                 // prepare docker build context
