@@ -47,7 +47,7 @@ pipeline {
                 script {
                     app = docker.build("vgdocker123/javademo")
                     app.inside {
-                        sh 'echo $(curl 107.21.35.45:8080/demo/Hello)'
+                        sh 'echo $(curl 127.0.0.1:8080/demo/Hello)'
                     }
                 }
             }
@@ -60,7 +60,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com/', 'Docker_Hub_Login') {
+                    docker.withRegistry('https://registry.hub.docker.com/', 'docker_hub_login') {
                        app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
                     }
