@@ -5,7 +5,7 @@ pipeline {
         stage('Build') { 
             steps { 
                echo 'This is a pipeline to build .war package.'
-                sh 'mvn --version'
+                //sh 'mvn --version'
                // sh 'mvn clean package -U'
                sh "bin/build"
                 // prepare docker build context
