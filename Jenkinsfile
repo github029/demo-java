@@ -22,6 +22,12 @@
                 echo 'version'
             }
         }
+       
+        stage('QATest') {
+            steps {
+                echo 'version'
+            }
+        }
     }
 }
    
